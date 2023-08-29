@@ -27,7 +27,7 @@ use App\Models\{
 
         {
 
-            $centroCustos = CentroCusto::orderBy('centro_custo')->paginte(10);
+            $centroCustos = CentroCusto::orderBy('centro_custo')->paginate(10);
 
             return view('centro.index')->with(compact('centroCustos'));
 
