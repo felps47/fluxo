@@ -151,7 +151,7 @@ use App\Models\{
 
          */
 
-        public function destroy(CentroCusto $centroCusto)
+        public function destroy(int $id)
 
         {
 
