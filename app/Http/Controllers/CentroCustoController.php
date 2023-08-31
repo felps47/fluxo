@@ -10,8 +10,7 @@ use App\Models\{
     };
 
     use Illuminate\Http\Request;
-
-
+use Illuminate\Support\Facades\Redirect;
 
     class CentroCustoController extends Controller
 
@@ -67,8 +66,9 @@ use App\Models\{
 
             $centro = CentroCusto::create($request->all());
 
-            return view('centro.index')->with('novo','Centro de custo cadastrado com sucesso');
-
+           return Redirect()
+           ->route('centro.index')
+           ->with('novo','Centro de Custo cadastrado com sucesso');
         }
 
 
