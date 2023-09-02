@@ -90,12 +90,9 @@ use Illuminate\Support\Facades\Redirect;
                 'lancamentos.tipo',
 
                 'lancamentos.usuario',
+            ])->find($id);
 
 
-
-            ])->find($id)
-
-            ->paginate(10);
 
             return view('centro.show')
 
