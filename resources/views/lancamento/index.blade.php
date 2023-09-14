@@ -3,10 +3,9 @@
     <h1>
         <i class="bi bi-wallet2"></i>
         - LANCAMENTOS
-
-
-        <a class ="btn btn-primary"
-        href="{{route ('lancamento.create')}}">
+        |
+        <a class="btn btn-primary"
+           href="{{ route('lancamento.create') }}">
             Novo Lançamento
         </a>
     </h1>
@@ -38,9 +37,10 @@
                 <tr>
                     <td scope="row" class="col-2">
                         <div class="flex-column">
-                            {{-- ver --}}
-                            <a class="btn btn-success" href="#">
-                                <i class="bi bi-eye"></i>
+                            {{-- ver      --}}
+                            <a class="btn btn-success"
+                            href="{{url('/storage/anexos//'.$lancamento->anexo)}}" target="_blank">
+                                <i class="bi bi-paperclip"></i>
                             </a>
                             {{-- editar --}}
                             <a class="btn btn-dark" href="#">
