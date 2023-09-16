@@ -20,9 +20,29 @@ class LancamentoController extends Controller
      * @date 04-09-2023
      *
      */
-    public function index()
+    public function index(Request $request, $search =  null)
     {
-        $lancamentos = Lancamento::orderBy('id_lancamento','desc')
+        $search = $request->get('search');
+        $dt_inicial = $request->get('dt_incial') ?? null;
+        $dt_final = $request->get('dt_final') ?? null;
+        //dd($search);
+
+        $lancamentos = Lancamento::where('id_user', Auth::user()->id)
+            ->where(function ($query) use ($search,$dt_inicial,$dt_final) {
+                if ($search) {
+                    $query->where('descricao', 'like', "%$search%");
+                }
+                if ($dt_inicial){
+                    $query->where('vencimento','>=',$dt_inicial);
+                }
+                if ($dt_final){
+                    $query->where('vencimento','>=',$dt_final);
+                }
+            })
+
+
+
+            ->orderBy('id_lancamento', 'desc')
             ->paginate(10);
 
         return view('lancamento.index')
@@ -60,18 +80,17 @@ class LancamentoController extends Controller
         // capturar o id do usuario logado
         $lancamento->id_user = Auth::user()->id;
         // subir o anexo
-       if($request->anexo){
-             $extension = $request->anexo->getClientOriginalExtension();
-             $nomeAnexo = date('YmdHis');
-             $request->anexo->storeAs('anexos',$nomeAnexo);
+        if ($request->anexo) {
+            $extension = $request->anexo->getClientOriginalExtension();
+            $nomeAnexo = date('YmdHis');
+            $request->anexo->storeAs('anexos', $nomeAnexo);
             $lancamento->anexo = $nomeAnexo;
 
-             //$lancamento->anexo = $request->anexo->store('anexos');
-       }
+            //$lancamento->anexo = $request->anexo->store('anexos');
+        }
         $lancamento->save();
         return redirect()
             ->route('lancamento.index');
-
     }
 
     /**
